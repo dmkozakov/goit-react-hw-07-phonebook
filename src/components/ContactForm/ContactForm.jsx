@@ -1,10 +1,9 @@
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
-import { ValidateError } from './ValidateError.styled';
-import { StyledForm } from './StyledForm.styled';
+import * as S from 'components/ContactForm/ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
 import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
 
 const initialValues = {
   name: '',
@@ -32,13 +31,13 @@ export default function ContactForm() {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
 
-  const handleSubmit = ({ name, number }, { resetForm }) => {
+  const handleSubmit = ({ name, phone }, { resetForm }) => {
     const isRepeat = contacts.find(contact => contact.name === name);
 
     if (isRepeat) {
       return alert(`${name} is already in your contacts`);
     } else {
-      dispatch(addContact(name, number));
+      dispatch(addContact(name, phone));
     }
 
     resetForm();
@@ -50,7 +49,7 @@ export default function ContactForm() {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      <StyledForm>
+      <S.StyledForm>
         <label>
           <p>Name</p>
           <Field
@@ -60,7 +59,7 @@ export default function ContactForm() {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
           />
-          <ValidateError name="name" component="div" />
+          <S.ValidateError name="name" component="div" />
         </label>
         <label>
           <p>Number</p>
@@ -71,10 +70,10 @@ export default function ContactForm() {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
           />
-          <ValidateError name="number" component="div" />
+          <S.ValidateError name="number" component="div" />
         </label>
         <button type="submit">Add contact</button>
-      </StyledForm>
+      </S.StyledForm>
     </Formik>
   );
 }

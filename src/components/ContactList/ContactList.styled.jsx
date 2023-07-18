@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const ContactsList = styled.ul`
+export const ContactList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -27,4 +27,37 @@ export const ContactsList = styled.ul`
       background-color: #1f0592;
     }
   }
+`;
+
+export const ContactListSection = styled.div`
+  h2 {
+    margin-left: 40px;
+    margin-bottom: 28px;
+    color: #eac645;
+  }
+
+  p {
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  input {
+    max-width: 280px;
+    width: 100%;
+    height: 36px;
+
+    margin-bottom: 16px;
+  }
+
+  li {
+  }
+`;
+
+export const ContactName = styled.span`
+  font-weight: 700;
+  color: #eac645;
+`;
+
+export const ContactPhone = styled.div`
+  font-size: 20px;
 `;

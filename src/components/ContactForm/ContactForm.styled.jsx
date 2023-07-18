@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ErrorMessage, Form } from 'formik';
 
 export const ContactFormSection = styled.div`
   margin-bottom: 44px;
@@ -38,4 +39,17 @@ export const ContactFormSection = styled.div`
       background-color: #1f0592;
     }
   }
+`;
+
+export const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const ValidateError = styled(ErrorMessage)`
+  margin-top: 8px;
+  margin-left: 12px;
+  font-size: 16px;
+  color: red;
 `;

@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
-import { ContactName } from './ContactName.styled';
-import { ContactsList } from './ContactList.styled';
-import { removeContact } from 'redux/contactsSlice';
+import * as S from 'components/ContactList/ContactList.styled';
+import { deleteContact } from 'redux/operations';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
@@ -15,24 +14,25 @@ export const ContactList = () => {
   );
 
   return (
-    <ContactsList>
-      {filteredContacts.map(({ id, name, number }) => {
+    <S.ContactList>
+      {filteredContacts.map(({ id, name, phone }) => {
         return (
           <li key={id}>
             <div>
-              <ContactName>{name}</ContactName>: <span>{number}</span>
+              <S.ContactName>{name}</S.ContactName>
+              <S.ContactPhone>{phone}</S.ContactPhone>
             </div>
             <button
               type="button"
               data-id={id}
-              onClick={() => dispatch(removeContact(id))}
+              onClick={() => dispatch(deleteContact(id))}
             >
               Delete
             </button>
           </li>
         );
       })}
-    </ContactsList>
+    </S.ContactList>
   );
 };
 
