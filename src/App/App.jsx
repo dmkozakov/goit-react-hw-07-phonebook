@@ -5,16 +5,16 @@ import { Filter } from '../components/Filter/Filter';
 import { Container } from './Container.styled';
 import { ContactFormSection } from 'components/ContactForm/ContactForm.styled';
 import * as S from 'components/ContactList/ContactList.styled';
-import { getContacts, getError, getIsLoading } from 'redux/selectors';
+import { selectContacts, selectError, selectIsLoading } from 'redux/selectors';
 import { fetchContacts } from 'redux/operations';
 import { ContactList } from 'components/ContactList/ContactList';
 import { Loader } from 'components/Loader/Loader';
 
 export default function App() {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(fetchContacts());
