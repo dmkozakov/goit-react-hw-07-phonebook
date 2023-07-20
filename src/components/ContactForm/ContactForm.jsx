@@ -7,7 +7,7 @@ import { addContact } from 'redux/operations';
 
 const initialValues = {
   name: '',
-  number: '',
+  phone: '',
 };
 
 const validationSchema = yup.object().shape({
@@ -18,7 +18,7 @@ const validationSchema = yup.object().shape({
       "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
     )
     .required(),
-  number: yup
+  phone: yup
     .string()
     .matches(
       /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
@@ -32,6 +32,8 @@ export default function ContactForm() {
   const contacts = useSelector(getContacts);
 
   const handleSubmit = ({ name, phone }, { resetForm }) => {
+    console.log(typeof phone);
+    console.log(phone);
     const isRepeat = contacts.find(contact => contact.name === name);
 
     if (isRepeat) {
@@ -65,12 +67,12 @@ export default function ContactForm() {
           <p>Number</p>
           <Field
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
           />
-          <S.ValidateError name="number" component="div" />
+          <S.ValidateError name="phone" component="div" />
         </label>
         <button type="submit">Add contact</button>
       </S.StyledForm>
