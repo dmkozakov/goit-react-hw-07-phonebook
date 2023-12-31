@@ -1,9 +1,11 @@
-import { Formik, Field } from 'formik';
+import { Formik, Field, FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import * as S from 'components/ContactForm/ContactForm.styled';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectContacts } from 'redux/selectors';
 import { addContact } from 'redux/operations';
+import { IContactForm } from 'interfaces/IContactForm';
+import { useAppDispatch } from 'redux/hooks';
 
 const initialValues = {
   name: '',
@@ -28,10 +30,13 @@ const validationSchema = yup.object().shape({
 });
 
 export default function ContactForm() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const contacts = useSelector(selectContacts);
 
-  const handleSubmit = (newContact, { resetForm }) => {
+  const handleSubmit = (
+    newContact: IContactForm,
+    { resetForm }: FormikHelpers<IContactForm>
+  ) => {
     const isRepeat = contacts.find(contact => contact.name === newContact.name);
 
     if (isRepeat) {
