@@ -19,7 +19,10 @@ const handlePending = (state: ContactsState) => {
   state.error = null;
 };
 
-const handleRejected = (state: ContactsState, action: any) => {
+const handleRejected = (
+  state: ContactsState,
+  action: PayloadAction<string | undefined>
+) => {
   if (action.payload) {
     state.isLoading = false;
     state.error = action.payload;
