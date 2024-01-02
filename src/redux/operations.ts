@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
 import { IContact } from 'interfaces/IContact';
-import { createAppAsyncThunk } from './hooks';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IContactForm } from 'interfaces/IContactForm';
 
@@ -39,15 +38,16 @@ export const addContact = createAsyncThunk<
   }
 });
 
-export const deleteContact = createAppAsyncThunk(
-  'contacts/deleteContact',
-  async (id: string, thunkAPI) => {
-    try {
-      const { data } = await axios.delete(`/contacts/${id}`);
-      return data as IContact;
-    } catch (err) {
-      const error = err as AxiosError;
-      return thunkAPI.rejectWithValue(error.message as string);
-    }
+export const deleteContact = createAsyncThunk<
+  IContact,
+  string,
+  { rejectValue: string }
+>('contacts/deleteContact', async (id: string, thunkAPI) => {
+  try {
+    const { data } = await axios.delete(`/contacts/${id}`);
+    return data as IContact;
+  } catch (err) {
+    const error = err as AxiosError;
+    return thunkAPI.rejectWithValue(error.message as string);
   }
-);
+});

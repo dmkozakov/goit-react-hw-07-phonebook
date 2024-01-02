@@ -1,4 +1,9 @@
-import { PayloadAction, Reducer, createSlice } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  PayloadAction,
+  Reducer,
+  createSlice,
+} from '@reduxjs/toolkit';
 import { addContact, deleteContact, fetchContacts } from './operations';
 import { IContact } from 'interfaces/IContact';
 
@@ -19,9 +24,13 @@ const handlePending = (state: ContactsState) => {
   state.error = null;
 };
 
+const isError = (action: AnyAction) => {
+  return action.type.endsWith('rejected');
+};
+
 const handleRejected = (
   state: ContactsState,
-  action: PayloadAction<string | undefined>
+  action: PayloadAction<string>
 ) => {
   if (action.payload) {
     state.isLoading = false;
@@ -67,13 +76,11 @@ const contactsSlice = createSlice({
     builder
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, handleFetchContacts)
-      .addCase(fetchContacts.rejected, handleRejected)
       .addCase(addContact.pending, handlePending)
       .addCase(addContact.fulfilled, handleAddContact)
-      .addCase(addContact.rejected, handleRejected)
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, handleDeleteContact)
-      .addCase(deleteContact.rejected, handleRejected);
+      .addMatcher(isError, handleRejected);
   },
 });
 
