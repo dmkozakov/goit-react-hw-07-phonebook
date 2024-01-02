@@ -17,10 +17,7 @@ export const fetchContacts = createAsyncThunk<
     const response = await axios.get('/contacts?orderby=name&order=asc');
     return response.data as IContact[];
   } catch (err) {
-    const error = err as Error | AxiosError;
-    if (!axios.isAxiosError(error)) {
-      console.log(error.message);
-    }
+    const error = err as AxiosError;
     return thunkAPI.rejectWithValue(error.message as string);
   }
 });
@@ -36,7 +33,8 @@ export const addContact = createAsyncThunk<
     await axios.post('/contacts', { name, phone });
     const response = await axios.get('/contacts?orderby=name&order=asc');
     return response.data as IContact[];
-  } catch (error) {
+  } catch (err) {
+    const error = err as AxiosError;
     return thunkAPI.rejectWithValue(error.message as string);
   }
 });
@@ -47,7 +45,8 @@ export const deleteContact = createAppAsyncThunk(
     try {
       const { data } = await axios.delete(`/contacts/${id}`);
       return data as IContact;
-    } catch (error) {
+    } catch (err) {
+      const error = err as AxiosError;
       return thunkAPI.rejectWithValue(error.message as string);
     }
   }

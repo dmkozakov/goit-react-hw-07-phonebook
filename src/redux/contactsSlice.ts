@@ -19,10 +19,7 @@ const handlePending = (state: ContactsState) => {
   state.error = null;
 };
 
-const handleRejected = (
-  state: ContactsState,
-  action: PayloadAction<string>
-) => {
+const handleRejected = (state: ContactsState, action: any) => {
   if (action.payload) {
     state.isLoading = false;
     state.error = action.payload;
@@ -70,10 +67,10 @@ const contactsSlice = createSlice({
       .addCase(fetchContacts.rejected, handleRejected)
       .addCase(addContact.pending, handlePending)
       .addCase(addContact.fulfilled, handleAddContact)
-      // .addCase(addContact.rejected, handleRejected)
+      .addCase(addContact.rejected, handleRejected)
       .addCase(deleteContact.pending, handlePending)
-      .addCase(deleteContact.fulfilled, handleDeleteContact);
-    // .addCase(deleteContact.rejected, handleRejected);
+      .addCase(deleteContact.fulfilled, handleDeleteContact)
+      .addCase(deleteContact.rejected, handleRejected);
   },
 });
 
